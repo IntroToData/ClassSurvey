@@ -1,0 +1,490 @@
+---
+title: "Class Survey"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: bootstrap
+    vertical_layout: scroll
+    logo: includes/nav_logo.svg
+    favicon: includes/favicon.ico
+---
+
+<style type="text/css">
+
+.chart-title {  /* chart_title  */
+   font-size: 30px;
+   font-family: Algerian;
+
+</style>
+
+```{r include = FALSE}
+
+## INIT ================================
+library(DT)
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+library(knitr)
+library(plotly)
+
+
+## LOAD DATA ===========================
+load("data/survey.rda")
+
+
+## Local Vars ==========================
+brks <- c(0, 25, 50, 75, 100)
+set.seed(12)
+colors <- c("#872634","#363636","goldenrod","#007574","#762A83",
+            "#05C3DE","#E5E4E0","#CF8D7C","#5F1E5E","lightblue4")
+
+```
+# Raw Data
+
+### The Raw Data
+
+```{r echo = FALSE, results = "asis"}
+
+datatable(survey)
+
+```
+
+# Demographics
+
+## Col1
+
+### Age
+
+```{r echo = FALSE}
+
+cols <- colors[1:1]
+
+plt <-
+    ggplot(survey, aes(x = as.numeric(age))) +
+    geom_histogram(aes(y = 100*..density..), fill = cols) +
+    geom_density(aes(y = (100.0*..density..))) +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    labs(x = "Age", y = "Percent") +
+    theme(axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Gender
+
+```{r echo = FALSE}
+
+if (length(unique(survey$gender)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$gender))]
+} else {
+    cols <- sample(colors, length(unique(survey$gender)), replace = TRUE)
+}
+    
+plt <-
+    ggplot(survey, aes(x = gender, fill = gender)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=cols) +
+    labs(x = "Gender", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Home State
+
+```{r echo = FALSE}
+
+if (length(unique(survey$home_state)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$home_state))]
+} else {
+    cols <- sample(colors, length(unique(survey$home_state)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = home_state, fill = home_state)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Home State", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+# Educationally Speaking
+
+### Year In School
+
+```{r echo = FALSE}
+
+if (length(unique(survey$school_year)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$school_year))]
+} else {
+    cols <- sample(colors, length(unique(survey$school_year)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = school_year, fill = school_year)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Year In School", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Degree
+
+```{r echo = FALSE}
+
+if (length(unique(survey$degree)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$degree))]
+} else {
+    cols <- sample(colors, length(unique(survey$degree)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = degree, fill = degree)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Degree", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Career
+
+```{r echo = FALSE}
+
+if (length(unique(survey$career)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$career))]
+} else {
+    cols <- sample(colors, length(unique(survey$career)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = career, fill = career)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Career", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+# Experience With Data
+
+### Do you like Math?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$like_math)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$like_math))]
+} else {
+    cols <- sample(colors, length(unique(survey$like_math)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = like_math, fill = like_math)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Like Math", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Are you good at counting things?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$good_counter)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$good_counter))]
+} else {
+    cols <- sample(colors, length(unique(survey$good_counter)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = good_counter, fill = good_counter)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Good Counter", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### What is (5+1)/2?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$algebra_quiz)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$algebra_quiz))]
+} else {
+    cols <- sample(colors, length(unique(survey$algebra_quiz)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = algebra_quiz, fill = algebra_quiz)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Algebra Quiz", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Have you ever analyzed data?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$ever_analyzed)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$ever_analyzed))]
+} else {
+    cols <- sample(colors, length(unique(survey$ever_analyzed)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = ever_analyzed, fill = ever_analyzed)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Ever Analyzed", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Data Analysis Tools
+
+```{r echo = FALSE}
+
+tmp <- data.frame(table(tools$ans))
+names(tmp) <- c("Tools", "Count")
+cols <- sample(colors, 16, replace = TRUE)
+
+plt <-
+    ggplot(tmp, aes(x = Tools, y = Count)) +
+    geom_bar(stat = "identity", fill = "#872634") +
+##geom_density() +
+scale_y_continuous(limits = c(0,max(tmp$Count))) +
+    labs(x = "Tools", y = "Count") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle = 90, hjust = 1, size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols); rm(tmp)
+
+
+```
+
+# Inquiring Minds Want To Know
+
+### Who do you think will win the next World Series?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$world_series)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$world_series))]
+} else {
+    cols <- sample(colors, length(unique(survey$world_series)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = world_series, fill = world_series)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "World Series", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+### Are you wondering why I am asking you these questions?
+
+```{r echo = FALSE}
+
+if (length(unique(survey$why_questions)) <= length(colors)) {
+    cols <- colors[1:length(unique(survey$why_questions))]
+} else {
+    cols <- sample(colors, length(unique(survey$why_questions)), replace = TRUE)
+}
+
+plt <-
+    ggplot(survey, aes(x = why_questions, fill = why_questions)) +
+    geom_bar(aes(y = 100.0*(..count..)/sum(..count..))) +
+    ##geom_density() +
+    scale_y_continuous(limits = c(0,100), breaks = brks, labels = brks) +
+    scale_fill_discrete(drop = FALSE) +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values=colors) +
+    labs(x = "Why Questions", y = "Percent") +
+    theme(legend.position = "none",
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),  
+          axis.title.x = element_text(size=25, face = "bold"),
+          axis.title.y = element_text(size=25, face = "bold"))
+
+ggplotly(plt)
+
+rm(tmp); rm(plt); rm(cols)
+
+```
+
+# Discussion
+
+## Col1
+
+### Quotable Quote:
+
+    Mathematics is the language in which God has written the universe.
+    
+    -- Galileo Galilei
+
+***
+
+This is not a statistics course. It is an analysis course.
+
+## Col2
+
+### Course Goals:
+
+Teach you how to:
+
+- Develop and answer research questions.
+- Download, manage, and characterize data.
+- Use data to tell a compelling story.
+
+### Three Maxims:
+
+1. Counting is hard.
+2. If you are doing it manually - you are doing it wrongly.
+3. If a marmot cannot understand your writing, neither can most
+   humans. 
+
+
+### Some things to ponder:
+
+- Did you learn anything about the people taking this class (as a group)?
+- Did you learn anything about what we will be doing this semester?
+- Did you see any pie charts?
+- Would you like to see how I did this?

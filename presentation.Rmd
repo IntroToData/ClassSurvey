@@ -1,0 +1,167 @@
+---
+title: "Course Introduction"
+author: "Andy Choens"
+output:
+  revealjs::revealjs_presentation:
+    transition: fade
+    logo: includes/nav_logo.svg
+    favicon: includes/favicon.ico
+---
+
+
+## Quotable
+
+```{r include = FALSE}
+
+math <- 1
+code <- 1
+
+```
+
+> Mathematics is the language in which God has written the universe.
+>
+> -- Galileo Galilei
+
+For the purposes of this course, `math == code`
+
+`r math == code`
+
+## Class Survey
+
+[https://goo.gl/forms/7lcuP6rgN7vdk4902](https://goo.gl/forms/7lcuP6rgN7vdk4902)
+
+## Class Survey Story
+
+- Alchemical process of converting raw data into knowledge
+
+## What I hope you learn
+
+- Develop and answer research questions.
+- Download, manage, and characterize data.
+- Use data to tell a compelling story.
+
+## Maxims
+
+1. Counting is hard.
+2. If you are doing it manually - you are doing it wrongly.
+3. If a marmot cannot understand your writing, neither can most
+   humans.
+
+## This is code
+
+
+```{r}
+
+library(dplyr); data(iris)
+iris %>% group_by(Species) %>% summarize(N = n())
+
+```
+
+## Prerequisites
+
+- This _is_ a programming course, but I assume nothing.
+- This course will focus on learning and process.
+- Bring you curiousity, and you will succeed.
+
+## First Textbook
+
+- [R For Data Science](http://r4ds.had.co.nz/) 
+    - There is a dead-tree version available if you prefer. It costs
+      money, but the author deserves it.
+    - The online version is sufficient for the course.
+    
+## Recommended Reading
+
+Specific readings will be assigned from these additional resources:
+
+- [R-bloggers](https://www.r-bloggers.com/)
+- [Andrew Gelman's blog: Statistical Modeling, Causal Inference, and Social Science](http://andrewgelman.com/)
+- [Frank Harrell's blog: Statistical Thinking](http://www.fharrell.com/)
+
+## Software
+
+| Name     | Recommended Download Link                                                                              | License   | Cost  |
+|:---------|:-------------------------------------------------------------------------------------------------------|:---------:|:-----:|
+| R        | [https://mirrors.sorengard.com/cran/](https://mirrors.sorengard.com/cran/)                             | GPL v2    | $0.00 |
+| R Studio | [https://www.rstudio.com/products/RStudio/#Desktop](https://www.rstudio.com/products/RStudio/#Desktop) | AGPL v3   | $0.00 |
+| DBeaver  | [https://dbeaver.jkiss.org/download/](https://dbeaver.jkiss.org/download/)                             | Apache v2 | $0.00 |
+
+## Assignments & Grading
+
+| Assignments                      | Assign Date | Due Date   | % Final Grade     |
+|:---------------------------------|:-----------:|:----------:|------------------:|
+| Homework 1: Collect It Yourself  | 2018-01-18  | 2018-01-25 |             5.5   |
+| Project 1: What Is The Question? | 2018-01-18  | 2018-02-01 |            11.1   |
+| Homework 2: Your Second Notebook | 2018-02-08  | 2018-02-15 |             5.5   |
+| Project 2: Details               | 2018-02-15  | 2018-03-01 |            11.1   |
+| Homework 3: Concatenation        | 2018-02-15  | 2018-02-22 |             5.6   |
+| Homework 4: Relational Data      | 2018-03-01  | 2018-03-08 |             5.6   |
+| Project 3: Rough Draft           | 2018-03-22  | 2018-04-05 |            11.1   |
+| Project 4: Final Analysis        | 2018-04-05  | 2018-04-26 |          **33.3** |
+
+## What is Data Science? (1)
+
+![Data Science Venn Diagram](includes/Data_Science_VD.png)
+
+## What is Data Science? (2)
+
+- _Nobody_ can excel equally at all three of these
+- The focus of this course:
+    - Primary: Hacking Skills
+    - Secondary: Math & Statistics Knowledge
+- You will take other Statistics courses
+- You will take Substantive Knowledge outside of this course
+- Example data will either be simple, or I will help provide the
+  Substantive Knowledge necessary to understand the data.
+
+## Homework 1: Collect It Yourself
+
+- Before you analyze any data, you should collect some.
+- Collect the following information from five friends. The data
+  must be collected in a spreadsheet. The data should be on the
+  first worksheet.  The column names and data types are provided
+  below. The spreadsheet must be either an Excel compatible
+  workbook (xlsx) or Open Document Spreadsheet format
+  (ods). Submit the workbook via Blackboard by 2018-01-25.
+- Before gathering this data, thank your friend for participating
+  and inform them that this is entirely voluntary and that they do
+  not have to give you this information. This data will be used in
+  class examples. If they skip a question, leave it blank.
+- The file submitted via Blackboard should include the following:
+
+## Homework 1: Collect It Yourself
+
+|Col  | Column Name          | Column Type     | Comments                                                      |
+|:---:|:---------------------|:----------------|:--------------------------------------------------------------|
+| 1   | Participant Initials | Text(2)         | Identifies unique rows         .                              |
+| 2   | DOB                  | DATE            | DOB is Date of Birth                                          |
+| 3   | Height               | Number (Inches) | Convert feet to inches. You are not expected to measure.      |
+| 4   | Weight               | Number (Pounds) | See Above!                                                    |
+| 5   | Sex                  | Text            | Values of: Male, Female, or how they choose to identify       |
+| 6   | Home State           | Text(2)         | State Abbreviation (example: NY), leave blank if not from US. | 
+| 7   | School Name          | Text            | Can be any school. If not enrolled, enter "Not In School"     |
+| 9   | Major                | Text            | If not enrolled, enter "Not In School"                        |
+
+## Projects
+
+- Four projects in this course. 
+- The first three projects account for 1/3 of your final grade. 
+- Project 4 accounts for 1/3 of your final grade.
+
+## Project 1: What Is The Question?
+
+- Identify a topic you would like to use for a data-driven research
+  project. Develop a rough draft of your research question and you
+  will identify where you can access the data needed to answer your
+  research question. You must submit the following:
+- Feel free to use any other legal, free, public resource. Do
+  not propose a project with Personal Health Information (PHI)
+  or Personal Identifying Information (PII). 
+    - _Any proposal based on PHI/PII data will be rejected_.
+    - Please submit this via Blackboard to the Instructor on
+      2018-02-01 as a Word, PDF, or plain text markdown file. If
+      you use Word, please keep the formatting simple.
+- There is a template available
+
+## LAB!
+
